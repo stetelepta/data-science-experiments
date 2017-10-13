@@ -47,7 +47,7 @@ def get_output_vector(points, grid_width, grid_height, sigma):
     - (n_y, nr_points) matrix with column vectors containing the probabilities for each bin, n_y = grid_width * grid_height
 
     Important:
-    Because want the output to conviently match array indices, we flip the rows in the array.
+    Because want the output to conveniently match array indices, we flip the rows in the array.
     Point have their origin top-left, so a point p has column vector (x, y)
     The resulting index in the (grid_width x grid_height) matrix for point p is v[y, x]
 
@@ -84,13 +84,28 @@ def get_output_vector(points, grid_width, grid_height, sigma):
     return Y
 
 
-def prepare_dataset(**params):
+def prepare_dataset(transpose=True, **params):
+    """
+    Input (required):
+      params['nr_points']  # nr of points to simulate
+      params['grid_width']  # generates random points between (0, 0) and (grid_width, grid_height)
+      params['grid_height']
+      params['sensors']  # (1, 2n) vector with coordinates of the sensors (x1, y1, x2, y2, .. ,xn, yn)
+      params['sigma']  # determines the amount of gaussian noise that is added to the output vector
+    Input (optional):
+      transpose: when True, return (nx, m) matrix (keras style), when False return (m, nx)
+
+    Returns:
+      - X: distances from points to sensors
+      - Y: (n_y, nr_points) matrix with column vectors containing the probabilities for each bin, n_y = grid_width * grid_height
+      - points: coordinates for each simulated point
+    """
 
     # get simulated points
     points = get_simulated_points(params['nr_points'], maxx=params['grid_width'], maxy=params['grid_height'])
 
-    # get all sensor distances
-    X = get_distances(points, params['sensors'])
+    # get all sensor distances, reshape ravel
+    X = get_distances(points, params['sensors'].reshape(-1, 2).T)
 
     # get output vector
     Y = get_output_vector(points, params['grid_width'], params['grid_height'], params['sigma'])
@@ -98,8 +113,8 @@ def prepare_dataset(**params):
     # normalize data
     X = X / np.sqrt(np.square(params['grid_width']) + np.square(params['grid_height']))
 
-    # transpose data, because keras expects (nx, m)
-    X = X.T
-    Y = Y.T
+    if transpose:
+        X = X.T
+        Y = Y.T
 
     return X, Y, points

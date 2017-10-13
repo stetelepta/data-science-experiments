@@ -1,52 +1,45 @@
-from data_utils import prepare_dataset
+from utils.data_utils import prepare_dataset
+from utils.experiment_utils import save_experiment
 from keras.models import Sequential
 from keras.layers import Dense, Activation
+from collections import OrderedDict
 import numpy as np
 
 # for reproducibility
 np.random.seed(1)
 
-
-def save_model(**params):
-    # use experiment attributes as filename
-    filename = ""
-    for key in sorted(params):
-        if key == "sensors":
-            print(tuple(params[key]))
-            filename += "sensors%s" % ([(s[0], s[1]) for s in tuple(params[key].T)])
-        else:
-            filename += "%s%s" % (key, str(params[key]))
-
-    # save model
-    model.save('models/%s.h5' % filename)  # save as HDF5 file
-
-
 # hyper parameters
-params = {
-    'epoch': 10,  # nr epochs
-    'nr_points': 100,  # nr test examples
-    'sensors': np.array([[5, 5], [10, 10]]).T,  # sensor locations
-    'sigma': 1,  # sigma for gaussian noise on output vector
-    'grid_width': 10,  # grid width
-    'grid_height': 10  # grid height
-}
+hyper_params = OrderedDict([
+    ('id', 1),
+    ('epoch', 2000),  # nr epochs
+    ('nr_points', 1000),  # nr test examples
+    ('sensors', np.array([0, 5, 10, 5])),  # sensor locations [s1_x, s1_y, s2_x, s2_y .. ]
+    ('sigma', 1),  # sigma for gaussian noise on output vector
+    ('grid_width', 10),  # grid width
+    ('grid_height', 10),  # grid height
+    ('nh_1', 12),  # nr units in first hidden layer
+    ('loss_function', 'categorical_crossentropy'),  # loss function
+    ('hidden_activation', 'tanh'),  # activation for hidden layers
+    ('output_activation', 'sigmoid'),  # final activation
+    ('optimizer', 'sgd')  # optimizer
+])
 
 # prepare training set
-x_train, y_train, points_train = prepare_dataset(**params)
+x_train, y_train, points_train = prepare_dataset(**hyper_params)
 
 # input and output size
-n_y = params['grid_width'] * params['grid_height']
+n_y = hyper_params['grid_width'] * hyper_params['grid_height']
 
 # create model
 model = Sequential()
-model.add(Dense(12, input_dim=x_train.shape[1], activation='tanh'))
-model.add(Dense(n_y, activation='softmax'))
+model.add(Dense(hyper_params['nh_1'], input_dim=x_train.shape[1], activation=hyper_params['hidden_activation']))
+model.add(Dense(n_y, activation=hyper_params['output_activation']))
 
 # Compile model
-model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
+model.compile(loss=hyper_params['loss_function'], optimizer=hyper_params['optimizer'], metrics=['accuracy'])
 
-# Fit the model
-model.fit(x_train, y_train, epochs=params['epoch'], batch_size=int(params['nr_points']/10))
+# Fit the model, use 10 batches for the training set
+model.fit(x_train, y_train, epochs=hyper_params['epoch'], batch_size=int(hyper_params['nr_points']/10))
 
-# save model
-save_model(**params)
+# save model, hyper parameters and log experiment
+save_experiment(model, hyper_params)
