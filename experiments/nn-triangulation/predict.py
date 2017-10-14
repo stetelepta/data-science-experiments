@@ -9,13 +9,13 @@ import matplotlib.pyplot as plt
 # np.random.seed(1)
 
 # load experiment
-experiment_id = 3
+experiment_id = "sensors-12"
 
 # load model and parameters
 model, hyper_params = load_experiment(experiment_id)
 
 # nr of points to generate for test set
-hyper_params['nr_points'] = 5
+hyper_params['nr_points'] = 10
 
 # prepare test set
 x_test, y_test, points_test = prepare_dataset(**hyper_params)
