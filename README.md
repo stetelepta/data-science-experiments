@@ -52,7 +52,7 @@ When using one sensor, the probabilities spread in a circle around the sensor.
 ![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-2-8-probs.png?raw=true)
 
 ### Two sensors with a 10x10 grid
-When using two sensors, the probabilies are highest are highest on the intersection of the two circles around the sensors. Note that there are still two possible locations where the distances match.
+When using two sensors, the probabilies are highest on the intersection of the two circles around the sensors. Note that there are still two possible locations where the distances match.
 * Cost after 10.000 epochs for 1.000 training examples: `3.086349`
 
 ![Two sensors](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-sensors-2-9-probs.png?raw=true)
