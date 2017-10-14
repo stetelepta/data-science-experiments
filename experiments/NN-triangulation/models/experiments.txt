@@ -1,1 +1,0 @@
-2017/10/13 23:50:37 id: 1; epoch: 10000; nr_points: 1000; sensors: [ 0  0 10  0 10 10]; sigma: 1; grid_width: 10; grid_height: 10; nh_1: 12; loss_function: categorical_crossentropy; hidden_activation: tanh; output_activation: sigmoid; optimizer: adam;
