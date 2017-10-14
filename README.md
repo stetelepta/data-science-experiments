@@ -17,10 +17,10 @@ A 2D grid is used as output (Y), where the true location of the object is approx
 _Dimensions_
 * m: number of points
 * n: number of sensors
-* w: width of the 2D plane
-* h: height of the 2D plane
-* X: (m, n) matrix - for each point the euclidean distance between the points and the sensors is calculated and used as training data
-* Y: (m, w x h) matrix - The output vector, is a 
+* w: width of the 2D grid
+* h: height of the 2D grid
+* X: (_m_, _n_) matrix
+* Y: (m, _w_ x _h_) matrix
 
 ### Installation
  
@@ -49,8 +49,10 @@ When using one sensor, the probabilities spread in a circle around the sensor.
 
 ![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-1-9-probs.png?raw=true)
 
+![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-2-8-probs.png?raw=true)
+
 ### Two sensors with a 10x10 grid
-When using two sensors, the probabilies are highest are highest on the intersection of the two circles around the sensors. Note that there are still two possible locations where the distances match
+When using two sensors, the probabilies are highest are highest on the intersection of the two circles around the sensors. Note that there are still two possible locations where the distances match.
 * Cost after 10.000 epochs for 1.000 training examples: `3.086349`
 
 ![Two sensors](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-sensors-2-9-probs.png?raw=true)
