@@ -38,4 +38,25 @@ Usage
    * an entry is with hyper parameters and final loss is added to `models/experiments.txt`
 * Adjust `predict.py` to run a prediction for an experiment.
 * Run `python predict.py`
-   * plots with predicts results are saved as png: `plots/exp-[experiment-i]-probs.png` 
+   * plots with predicts results are saved as png: `plots/exp-[experiment-i]-probs.png`
+   
+Results
+-----------------------
+
+### One sensors with a 10x10 grid
+When using one sensor, the probabilities spread in a circle around the sensor.
+* Cost after 10.000 epochs for 1.000 training examples: `3.514507`
+
+![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-1-9-probs.png?raw=true)
+
+### Two sensors with a 10x10 grid
+When using two sensors, the probabilies are highest are highest on the intersection of the two circles around the sensors. Note that there are still two possible locations where the distances match
+* Cost after 10.000 epochs for 1.000 training examples: `3.086349`
+
+![Two sensors](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-sensors-2-9-probs.png?raw=true)
+
+### Three sensors with a 10x10 grid
+When using three sensors, there is just one possible location left where the object can be located. This location is correctly predicted.
+* Cost after 10.000 epochs for 1.000 training examples: `2.589003`
+
+![Three sensors](https://raw.githubusercontent.com/stetelepta/data-science-experiments/master/experiments/nn-triangulation/plots/exp-three-sensors-1-2-probs.png)
