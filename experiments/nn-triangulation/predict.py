@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # np.random.seed(1)
 
 # load experiment
-experiment_id = "one-sensors-1"
+experiment_id = "one-sensors-2"
 
 # load model and parameters
 model, hyper_params = load_experiment(experiment_id)
