@@ -9,7 +9,7 @@ def plot_predictions(probabilities, y_test, points_test, **params):
     probs_matrix = probabilities.reshape(params['grid_width'], params['grid_height'])
 
     # new figure
-    plt.figure(figsize=(20, 10))
+    plt.figure(figsize=(15, 10))
 
     # set fig size
     gs = gridspec.GridSpec(1, 3, width_ratios=[1, 1, 1])
