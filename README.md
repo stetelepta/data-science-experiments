@@ -43,12 +43,12 @@ Usage
 Results
 -----------------------
 
-### One sensors with a 10x10 grid
+### One sensor with a 10x10 grid
 When using one sensor, the probabilities spread in a circle around the sensor.
-* Cost after 10.000 epochs for 1.000 training examples: `3.514507`
-
+* Sensor location top-left, cost after 10.000 epochs for 1.000 training examples: `3.514507`
 ![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-1-9-probs.png?raw=true)
 
+* Sensor location center, cost after 10.000 epochs for 1.000 training examples: `4.108721`
 ![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-2-8-probs.png?raw=true)
 
 ### Two sensors with a 10x10 grid
