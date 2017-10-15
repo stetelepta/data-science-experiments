@@ -1,5 +1,5 @@
-# data-science-experiments
-Exploring data science concepts and techniques
+# Data science experiments
+Exploring data science & machine-learning concepts and techniques
 
 
 Experiment 1: Triangulation with Neural networks
@@ -24,13 +24,12 @@ _Dimensions_
 
 ### Installation
  
-* Install the requirements using `pip install -r requirements.txt`.
-  * Make sure you use Python 3.
+* Install the requirements using `pip install -r requirements.txt` (and use Python 3)
 
 Usage
 -----------------------
 
-* Adjust hyperparameters or add new experiments in `experiments.py`
+* Adjust or add new experiments in `experiments.py`
 * Run `python train` to run all experiments from `experiments.py`
    * model is saved as HD5 file: `models/exp-[experiment].hd5`
    * loss history is saved as pickle: `models/exp-[experiment]-loss_history.pickle`
@@ -52,10 +51,14 @@ When using one sensor, the probabilities spread in a circle around the sensor.
 ![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-2-8-probs.png?raw=true)
 
 ### Two sensors with a 10x10 grid
-When using two sensors, the probabilies are highest on the intersection of the two circles around the sensors. Note that there are still two possible locations where the distances match.
-* Cost after 10.000 epochs for 1.000 training examples: `3.086349`
+When using two sensors, the probabilies are highest on the intersection of the two circles around the sensors. Note that there are still two possible locations where the distances match. 
 
+* Cost after 10.000 epochs for 1.000 training examples: `3.086349`
 ![Two sensors](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-sensors-2-9-probs.png?raw=true)
+
+Here, the two sensors are placed on an edge. Now there are no intersections of the circles, and the performance is even a bit better than the experiments with three sensors (see below)
+* Cost after 10.000 epochs for 1.000 training examples: `2.588849`
+![Two sensors](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-sensors-12-5-probs.png?raw=true)
 
 ### Three sensors with a 10x10 grid
 When using three sensors, there is just one possible location left where the object can be located. This location is correctly predicted.
