@@ -1,7 +1,10 @@
+from matplotlib import gridspec
+from pylab import cm
+from scipy import interpolate
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from matplotlib import gridspec
-import numpy as np
+import seaborn as sns
 
 
 def plot_predictions(probabilities, y_test, points_test, **params):
@@ -9,28 +12,60 @@ def plot_predictions(probabilities, y_test, points_test, **params):
     probs_matrix = probabilities.reshape(params['grid_width'], params['grid_height'])
 
     # new figure
-    plt.figure(figsize=(15, 10))
+    plt.figure(figsize=(20, 10))
 
-    # set fig size
-    gs = gridspec.GridSpec(1, 3, width_ratios=[1, 1, 1])
+    # # set fig size
+    # gs = gridspec.GridSpec(1, 4, width_ratios=[1, 1, 1, 1])
 
-    # plot prediction
-    plt.subplot(gs[0])
-    plt.title("prediction", y=1.08)
-    plt.axis('off')
+    # # plot prediction
+    # plt.subplot(gs[0])
+    # plt.title("prediction 2D histogram", y=1.08)
+    # plt.axis('off')
 
-    plt.imshow(probs_matrix)
+    # plt.imshow(probs_matrix)
 
-    # plot true values
-    plt.subplot(gs[1])
-    plt.title("true value: (%.2f, %.2f)" % (points_test[0], points_test[1]), y=1.08)
-    plt.axis('off')
-    plt.imshow(y_test.reshape(params['grid_width'], params['grid_height']))
+    # set style
+    sns.set_style("whitegrid")
 
-    with plt.style.context(('seaborn-darkgrid')):
-        # plot sensor distances
-        plt.subplot(gs[2])
-        plot_sensors_distances(points_test, params['sensors'], params['grid_width'], params['grid_height'])
+    # prepare meshgrid
+    x_mesh = np.arange(0, params['grid_width'], 1)
+    y_mesh = np.arange(0, params['grid_height'], 1)
+
+    # plot contour of prediction
+    xx, yy = np.meshgrid(x_mesh, y_mesh)
+
+    # probabilities
+    z = probs_matrix
+
+    # interpolate, so we can make nice plots
+    f = interpolate.interp2d(x_mesh, y_mesh, z, kind='cubic')
+
+    # prepare grid 10 times as large
+    xx_new = np.arange(0, params['grid_width'], 0.001 * params['grid_width'])
+    yy_new = np.arange(0, params['grid_height'], 0.001 * params['grid_height'])
+
+    # interpolate z
+    z_interpolated = f(xx_new, yy_new)
+
+    cmap = cm.get_cmap('PiYG', 11)
+
+    plt.contourf(xx_new, yy_new, z_interpolated.reshape(1000, 1000), cmap=cmap)
+    plt.title("prediction: contour", y=1.08)
+    ax = plt.gca()
+    ax.axis([0, 10, 0, 10])
+    ax.set_aspect('equal')
+    plt.show()
+
+    # # plot true values
+    # plt.subplot(gs[2])
+    # plt.title("true value: (%.2f, %.2f)" % (points_test[0], points_test[1]), y=1.08)
+    # plt.axis('off')
+    # plt.imshow(y_test.reshape(params['grid_width'], params['grid_height']))
+
+    # with plt.style.context(('seaborn-darkgrid')):
+    #     # plot sensor distances
+    #     plt.subplot(gs[3])
+    #     plot_sensors_distances(points_test, params['sensors'], params['grid_width'], params['grid_height'])
 
 
 def plot_sensors_distances(point, sensors, grid_width, grid_height):

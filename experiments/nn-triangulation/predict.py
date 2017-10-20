@@ -6,16 +6,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # for reproducibility
-# np.random.seed(1)
+np.random.seed(2)
 
 # load experiment
-experiment_id = "sensors-12"
+experiment_id = "one-sensors-1"
 
 # load model and parameters
 model, hyper_params = load_experiment(experiment_id)
 
 # nr of points to generate for test set
-hyper_params['nr_points'] = 10
+hyper_params['nr_points'] = 1
 
 # prepare test set
 x_test, y_test, points_test = prepare_dataset(**hyper_params)
