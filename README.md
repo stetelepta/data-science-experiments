@@ -45,23 +45,23 @@ Results
 ### One sensor with a 10x10 grid
 When using one sensor, the probabilities spread in a circle around the sensor.
 * Sensor location top-left, cost after 10.000 epochs for 1.000 training examples: `3.514507`
-![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-1-9-probs.png?raw=true)
+![One sensor](https://raw.githubusercontent.com/stetelepta/data-science-experiments/91f10efe2735b167797ce66facd50b049042d27c/experiments/nn-triangulation/plots/exp-one-sensors-1-9-probs.png?raw=true)
 
 * Sensor location center, cost after 10.000 epochs for 1.000 training examples: `4.108721`
-![One sensor](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-one-sensors-2-8-probs.png?raw=true)
+![One sensor](https://raw.githubusercontent.com/stetelepta/data-science-experiments/91f10efe2735b167797ce66facd50b049042d27c/experiments/nn-triangulation/plots/exp-one-sensors-2-8-probs.png?raw=true)
 
 ### Two sensors with a 10x10 grid
 When using two sensors, the probabilies are highest on the intersection of the two circles around the sensors. Note that there are still two possible locations where the distances match. 
 
 * Cost after 10.000 epochs for 1.000 training examples: `3.086349`
-![Two sensors](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-sensors-2-9-probs.png?raw=true)
+![Two sensors](https://raw.githubusercontent.com/stetelepta/data-science-experiments/91f10efe2735b167797ce66facd50b049042d27c/experiments/nn-triangulation/plots/exp-sensors-2-9-probs.png?raw=true)
 
 Here, the two sensors are placed on an edge. Now there are no intersections of the circles, and the performance is even a bit better than the experiments with three sensors (see below)
 * Cost after 10.000 epochs for 1.000 training examples: `2.588849`
-![Two sensors](https://github.com/stetelepta/data-science-experiments/blob/master/experiments/nn-triangulation/plots/exp-sensors-12-5-probs.png?raw=true)
+![Two sensors](https://raw.githubusercontent.com/stetelepta/data-science-experiments/91f10efe2735b167797ce66facd50b049042d27c/experiments/nn-triangulation/plots/exp-sensors-12-5-probs.png)
 
 ### Three sensors with a 10x10 grid
 When using three sensors, there is just one possible location left where the object can be located. This location is correctly predicted.
 * Cost after 10.000 epochs for 1.000 training examples: `2.589003`
 
-![Three sensors](https://raw.githubusercontent.com/stetelepta/data-science-experiments/master/experiments/nn-triangulation/plots/exp-three-sensors-1-2-probs.png)
+![Three sensors](https://raw.githubusercontent.com/stetelepta/data-science-experiments/91f10efe2735b167797ce66facd50b049042d27c/experiments/nn-triangulation/plots/exp-three-sensors-1-2-probs.png)
