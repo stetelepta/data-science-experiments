@@ -7,22 +7,21 @@ from collections import OrderedDict
 import numpy as np
 
 # for reproducibility
-np.random.seed(1)
-
+# np.random.seed(1)
 
 # base experiment
 base_experiment = OrderedDict([
     ('id', 'exp'),
     ('epoch', 10000),  # nr epochs
-    ('nr_points', 1000),  # nr test examples
+    ('nr_points', 10000),  # nr test examples
     ('sensors', np.array([0, 0, 10, 0])),  # sensor locations [s1_x, s1_y, s2_x, s2_y .. ]
-    ('sigma', 1),  # sigma for gaussian noise on output vector
+    ('sigma', 0),  # sigma for gaussian noise on output vector
     ('grid_width', 10),  # grid width
     ('grid_height', 10),  # grid height
-    ('nh_1', 4),  # nr units in first hidden layer
+    ('nh_1', 10),  # nr units in first hidden layer
     ('loss_function', 'categorical_crossentropy'),  # loss function
     ('hidden_activation', 'tanh'),  # activation for hidden layers
-    ('output_activation', 'sigmoid'),  # final activation
+    ('output_activation', 'softmax'),  # final activation
     ('optimizer', 'adam')  # optimizer
 ])
 
@@ -30,10 +29,13 @@ base_experiment = OrderedDict([
 # what experiments do we want to run
 exp_settings = [
     # {'param': 'nh_1', 'values': np.arange(1, 17)},                       # tune nr hidden layers
-    {'param': 'optimizer', 'values': ['sgd', 'adam']},                   # tune optimizers
-    {'param': 'sigma', 'values': [0, 0.5, 1, 2]},                        # tune sigma
-    {'param': 'hidden_activation', 'values': ['tanh', 'relu']},          # tune activation for hidden layer
-    {'param': 'output_activation', 'values': ['sigmoid', 'softmax']},    # tune activation for output layer
+    # {'param': 'optimizer', 'values': ['sgd', 'adam']},                   # tune optimizers
+    # {'param': 'sigma', 'values': [0, 0.5, 1, 2]},                        # tune sigma
+    # {'param': 'hidden_activation', 'values': ['tanh', 'relu', 'elu', 'softplus', 'softsign']},          # tune activation for hidden layer
+    # {'param': 'output_activation', 'values': ['sigmoid', 'softmax']},    # tune activation for output layer
+    # {'param': 'optimizer', 'values': ['adam']},
+    # {'param': 'nr_points', 'values': [100, 500, 1000, 2500, 5000, 10000]},
+    {'param': 'epoch', 'values': [1000, 2500, 5000, 10000, 25000, 50000]}
 ]
 
 experiments = setup_experiments(exp_settings, base_experiment)
@@ -42,8 +44,6 @@ experiments = setup_experiments(exp_settings, base_experiment)
 losses = {}
 
 for experiment in experiments:
-    print("==============")
-    print("experiment %s" % experiment['id'])
     # prepare training set
     x_train, y_train, points_train = prepare_dataset(**experiment)
 
@@ -53,6 +53,7 @@ for experiment in experiments:
     # create model
     model = Sequential()
     model.add(Dense(experiment['nh_1'], input_dim=x_train.shape[1], activation=experiment['hidden_activation']))
+    # model.add(Dense(experiment['nh_1'], input_dim=experiment['nh_1'], activation=experiment['hidden_activation']))
     model.add(Dense(n_y, activation=experiment['output_activation']))
 
     # Compile model
@@ -72,5 +73,6 @@ for experiment in experiments:
     # save model, hyper parameters and log experiment
     save_experiment(model, experiment, loss_history)
 
+# save losses for all experiments
 save_losses(losses)
-print(losses)
+# print(losses)
